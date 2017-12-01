@@ -2,7 +2,7 @@ import React from 'react';
 import { IndexLink, Link } from "react-router/lib";
 
 export default class Nav extends React.Component {
-constructor() {
+ constructor() {
     super()
     this.state = {
       collapsed: true,
@@ -15,11 +15,10 @@ constructor() {
   }
 
   render() {
-  	console.log(this.props);
     const { location } = this.props;
     const { collapsed } = this.state;
     const featuredClass = location.pathname === "/" ? "active" : "";
-    const archivesClass = location.pathname.match(/^\/archives/) ? "active" : "";
+    const archivesClass = location.pathname.match(/^\/favorites/) ? "active" : "";
     const settingsClass = location.pathname.match(/^\/settings/) ? "active" : "";
     const navClass = collapsed ? "collapse" : "";
 
@@ -37,10 +36,10 @@ constructor() {
           <div class={"navbar-collapse " + navClass} id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li class={featuredClass}>
-                <IndexLink to="/" onClick={this.toggleCollapse.bind(this)}>Featured</IndexLink>
+                <IndexLink to="/" onClick={this.toggleCollapse.bind(this)}>Todos</IndexLink>
               </li>
               <li class={archivesClass}>
-                <Link to="archives" onClick={this.toggleCollapse.bind(this)}>Archives</Link>
+                <Link to="favorites" onClick={this.toggleCollapse.bind(this)}>Favorites</Link>
               </li>
               <li class={settingsClass}>
                 <Link to="settings" onClick={this.toggleCollapse.bind(this)}>Settings</Link>
