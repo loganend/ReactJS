@@ -1,21 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Router, Route, IndexRoute, hashHistory} from "react-router/lib";
+import { combineReducers, createStore } from "redux";
 
-import Layout from './pages/layout.js';
-import Settings from './pages/settings.js';
-import Todos from './pages/todos.js'
-import Favorites from './pages/favorites.js'
+const userReducer = (state={}, action) => {
+	switch(action.type){
+		case "CHANGE_NAME": {
+			state = {...state, name: action.payload}
+			break;
+		}
+		case "CHANGE_AGE": {
+			state = {...state, age: action.payload}
+			break;
+		}
+	}
+	return state;
+};
 
-const app = document.getElementById('app')
+const tweetsReducer = (state=[], actions) => {
+	return state;
+}; 
 
-ReactDOM.render(
-	<Router history = {hashHistory}>
-		<Route path = "/" component={Layout}>
-			<IndexRoute component = {Todos}></IndexRoute>
-			<Route path="/favorites(/:article)" component = {Favorites}></Route>
-			<Route path="/settings" component = {Settings}></Route>
-		</Route>
-	</Router>,
-	 app);
+const reducers = combineReducers({
+	user: userReducer,
+	tweets: tweetsReducer,
+});
+
+const store = createStore(reducers);
+
+// const store = createStore(reducer, {
+// 	user: {
+// 		name: "Will",
+// 		age: 45,
+// 	},
+// 	tweets: []
+// });
+
+store.subscribe(()=>{
+	console.log("Store changed", store.getState());
+})
+
+store.dispatch({type: "CHANGE_NAME", payload: "Will"});
+store.dispatch({type: "CHANGE_AGE", payload: 35});
+store.dispatch({type: "CHANGE_AGE", payload: 36});
 
